@@ -35,6 +35,7 @@ nrow(cars)
 colnames(cars)[2]
 # or
 names(cars)[2]
+# dist
 
 ## Exercise #7 ##
 # The simplest way to extract the columns of a matrix or data.frame is using [. For example you can access the second column with cars[,2].
