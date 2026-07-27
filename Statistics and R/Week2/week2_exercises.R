@@ -172,3 +172,80 @@ pnorm(25, 23.9, 0.43) - pnorm(23, 23.9, 0.43)
 # The answers to 2 and 3 were very similar. 
 # This is because we can approximate the distribution of the sample average with a 
 # normal distribution.
+
+############################# Population, Samples, and Estimates Exercises #############################
+dat <- read.csv("mice_pheno.csv")
+dat <- na.omit(dat)
+head(dat)
+
+## Population, Samples, and Estimates Exercises #1
+# Use dplyr to create a vector x with the body weight of all males on the control (chow) diet.
+# What is this population's average?
+library(tidyverse)
+x <- dat |> 
+  filter(Sex == "M" & Diet == "chow") |> 
+  pull(Bodyweight)
+mean(x)
+# 30.96381
+
+## Population, Samples, and Estimates Exercises #2
+# Now use the rafalib package and use the popsd() function to compute the population standard deviation.
+library(rafalib)
+popsd(x)
+# 4.420501
+
+## Population, Samples, and Estimates Exercises #3
+# Set the seed at 1. Take a random sample X of size 25 from x.
+# What is the sample average?
+set.seed(1)
+X <- sample(x, 25)
+mean(X)
+# 30.5196
+
+## Population, Samples, and Estimates Exercises #4
+# Use dplyr to create a vector y with the body weight of all males on the high fat hf) diet.
+# What is this population's average?
+y <- dat |> 
+  filter(Sex == "M" & Diet == "hf") |> 
+  pull(Bodyweight)
+mean(y)
+# 34.84791
+
+## Population, Samples, and Estimates Exercises #5
+# Now use the rafalib package and use the popsd() function to compute the population standard deviation.
+popsd(y)
+# 5.574609
+
+## Population, Samples, and Estimates Exercises #6
+# Set the seed at 1. Take a random sample  of size 25 from y.
+# What is the sample average?
+set.seed(1)
+Y <- sample(y, 25)
+mean(Y)
+# 35.8036
+
+## Population, Samples, and Estimates Exercises #7
+# What is the difference in absolute value between y(bar) - x(bar) and Y(bar) - X(bar)?
+abs((mean(y) - mean(x)) - (mean(Y) - mean(X)))
+# 1.399884
+
+## Population, Samples, and Estimates Exercises #8
+# Repeat the above for females, this time setting the seed to 2.
+# What is the difference in absolute value between y(bar) - x(bar) and Y(bar) - X(bar)?
+# Make sure to set the seed to 2 before each sample() call. This function should be called twice.
+x <- dat |> 
+  filter(Sex == "F" & Diet == "chow") |> 
+  pull(Bodyweight)
+
+set.seed(2)
+X <- sample(x, 25)
+
+y <- dat |> 
+  filter(Sex == "F" & Diet == "hf") |> 
+  pull(Bodyweight)
+
+set.seed(2)
+Y <- sample(y, 25)
+
+abs((mean(y) - mean(x)) - (mean(Y) - mean(X)))
+# 0.3647172
